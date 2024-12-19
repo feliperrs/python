@@ -40,53 +40,62 @@ def conferir_numero(numero_jogador, numero_gerado):
         print('Chute um número maior 🔺')
         resultado = False
     elif numero_jogador == numero_gerado:
-        print('Você acertou ✅')
+        print('\nVocê acertou ✅')
         resultado = True
     return resultado
 
 def menu():
-    print('Escolha uma das seguintes opções: ')
+    print('\nEscolha uma das seguintes opções: ')
     print('Jogar (1)')
     print('Sair (2)')
     
 
 # programa principal
-print('🍀 Olá, bem vindo ao jogo de acertar o número aleatório 🍀')
+print('\n🍀 Olá, bem vindo ao jogo de acertar o número aleatório 🍀')
 print('Qual o seu nome?')
 nome = input('>> ')
-print(f'Olá, {nome} 😁')
+print(f'\nOlá, {nome} 😁')
+sleep(1)
 
 while True:
     menu()
+    tentativas_restantes = 10
+    tentativa_usadas = 0
     try:
         escolha = int(input('>> '))
         if escolha == 1:
-            print('Ok, vou gerar um número aleatório entre 1 e 100, um momento...')
-            sleep(1)
-            print('■□■□■□■□■□■□■□■□■')
-            sleep(1)
-            print('■□■□■□■□■□■□■□■□■')
-            sleep(1)
-            print('■□■□■□■□■□■□■□■□■')
+            print('\nOk, vou gerar um número aleatório entre 1 e 100, um momento...')
+            for i in range (3):
+                sleep(1)
+                print('■□■□■□■□■□■□■□■□■')
+
             numero_gerado = gerar_numero(1,100)
-            print('Pronto, o número foi gerado 😎')
-            print(numero_gerado)
+            print('\nPronto, o número foi gerado 😎\n')
+            # print(numero_gerado)
             print('Agora, tente acertar qual o número aleatório')
             sleep(1)
             while True:
                 try:
                     palpite = int(input('>> '))
+                    tentativa_usadas += 1
                     resposta = conferir_numero(palpite,numero_gerado)
                     if resposta == True:
+                        print(f'Você usou {tentativa_usadas} tentativas 🤓')
                         break
                     else:
-                        continue
+                        tentativas_restantes -= 1
+                        if tentativas_restantes > 1:
+                            print(f'Você tem {tentativas_restantes} tentativas')
+                            continue
+                        if tentativas_restantes == 1 and resposta == False:
+                            print('Que pena, você perdeu 😥')
+                    
                 except:
-                    print('Você precisa digitar um número')
+                    print('Você precisa digitar um número ❗')
 
         elif escolha == 2:
              print('Ok, encerrando o programa 🤖')
              break
 
     except:
-        print('Você precisa escolher entre Jogar(1) ou Sair(2)')
+        print('Você precisa escolher entre Jogar(1) ou Sair(2) ❗')
